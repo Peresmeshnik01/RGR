@@ -4,7 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>   
-using namespace std; 
+using namespace std;
 // Функция шифрования
 string encrypt(string plaintext, string key) {
     string ciphertext = "";
@@ -79,84 +79,103 @@ string decrypt(string ciphertext, string key) {
 }
 
 
-string get_password() { 
-    string password; 
-    cout << "Введите пароль: "; 
-    cin >> password; 
-    return password; 
+string get_password() {
+    string password;
+    cout << "Введите пароль: ";
+    cin >> password;
+    return password;
 }
 
-void write_to_file(string filename, string text) { 
-    ofstream file(filename); 
-    file << text; 
-    file.close(); 
-    cout << "Текст записан в файл " << filename << endl; 
-} 
- 
-string read_from_file(string filename) { 
-    ifstream file(filename); 
-    string text((istreambuf_iterator<char>(file)), (istreambuf_iterator<char>())); 
-    file.close(); 
-    return text; 
-} 
+void write_to_file(string filename, string text) {
+    ofstream file(filename);
+    file << text;
+    file.close();
+    cout << "Текст записан в файл " << filename << endl;
+}
+
+string read_from_file(string filename) {
+    ifstream file(filename);
+    string text((istreambuf_iterator<char>(file)), (istreambuf_iterator<char>()));
+    file.close();
+    return text;
+}
+
+bool isEnglish(string str) {
+    for (int i = 0; i < str.length(); i++) {
+        int asciiCode = (int)str[i];
+        if (asciiCode < 65 || (asciiCode > 90 && asciiCode < 97) || asciiCode>122) {
+            return false;
+        }
+    }
+    return true;
+}
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
-    string message, password,key;
+    string message, password, key;
     char answer;
     bool all_upper = true;
     cout << "Введите исходный текст на английском языке заглавными буквами: ";
     getline(cin, message);
-    for(char c: message){
-        if(islower(c)){
+    for (char c : message) {
+        if (islower(c)) {
             all_upper = false;
-            cout <<"Ошибка: строка содержит символы нижнего регистра.\n";
+            cout << "Ошибка: строка содержит символы нижнего регистра.\n";
             break;
         }
     }
-    if (all_upper){
-        cout << "Введите ключ: ";
-        getline(cin,key);
-    
-        write_to_file("source.txt", message);
-        password = get_password();
-        // шифрование   
-        if (password == "secret") {
-            message = read_from_file("source.txt");
-            message = encrypt(message, key);
-            write_to_file("encoded_message.txt", message);
-            cout << "Текст зашифрован и записан в encoded_message.txt" << endl;
+    bool mes = isEnglish(message);
+    if (all_upper && mes) {
+        cout << "Введите ключ (слово на английском языке): ";
+        getline(cin, key);
+        bool k = isEnglish(key);
+        if (k) {
+            write_to_file("source.txt", message);
+            password = get_password();
+            // шифрование   
+            if (password == "secret") {
+                message = read_from_file("source.txt");
+                message = encrypt(message, key);
+                write_to_file("encoded_message.txt", message);
+                cout << "Текст зашифрован и записан в encoded_message.txt" << endl;
+            }
+            else {
+                cout << "Неверный пароль, шифрование невозможно" << endl;
+            }
+
+            password = get_password();
+            // дешифрование   
+            if (password == "secret") {
+                message = read_from_file("encoded_message.txt");
+                message = decrypt(message, key);
+                write_to_file("decoded_message.txt", message);
+                cout << "Текст расшифрован и записан в decoded_message.txt" << endl;
+            }
+            else {
+                cout << "Неверный пароль, дешифрование невозможно" << endl;
+            }
+            cout << "Нажмите 'p', чтобы распечатать файлы: ";
+            cin >> answer;
+            if (answer == 'p' || answer == 'P') {
+                cout << "Файл source.txt:" << endl;
+                cout << endl;
+                cout << read_from_file("source.txt") << endl;
+                cout << endl;
+                cout << "Файл encoded_message.txt:" << endl;
+                cout << endl;
+                cout << read_from_file("encoded_message.txt") << endl;
+                cout << endl;
+                cout << "Файл decoded_message.txt:" << endl;
+                cout << endl;
+                cout << read_from_file("decoded_message.txt") << endl;
+            }
         }
-        else {
-            cout << "Неверный пароль, шифрование невозможно" << endl;
+        else if (!k) {
+            cout << "Ключ содержит символы на русском языке";
         }
-    
-        password = get_password();
-        // дешифрование   
-        if (password == "secret") {
-            message = read_from_file("encoded_message.txt");
-            message = decrypt(message, key);
-            write_to_file("decoded_message.txt", message);
-            cout << "Текст расшифрован и записан в decoded_message.txt" << endl;
-        }
-        else {
-            cout << "Неверный пароль, дешифрование невозможно" << endl;
-        }
-        cout << "Нажмите 'p', чтобы распечатать файлы: ";
-        cin >> answer;
-        if (answer == 'p' || answer == 'P') {
-            cout << "Файл source.txt:" << endl;
-            cout << endl;
-            cout << read_from_file("source.txt") << endl;
-            cout << endl;
-            cout << "Файл encoded_message.txt:" << endl;
-            cout << endl;
-            cout << read_from_file("encoded_message.txt") << endl;
-            cout << endl;
-            cout << "Файл decoded_message.txt:" << endl;
-            cout << endl;
-            cout << read_from_file("decoded_message.txt") << endl;
-        }
+    }
+    else if (!mes) {
+        cout << "Строка содержит символы на русском языке";
     }
 }
