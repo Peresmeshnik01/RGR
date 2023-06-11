@@ -1,32 +1,33 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <cmath>
-
+#include <iostream>   
+#include <fstream>   
+#include <algorithm>   
+#include <string>   
+#include <math.h>    
+#include <clocale> 
+#include <Windows.h> 
 using namespace std;
 
-// Функция для шифрования методом Скитала
-string encrypt(const string& plaintext, int rails) {
-    int length = plaintext.length();
+string encrypt(const string& text, int rails) {
+    int length = text.length();
     int numRails = min(rails, length);
     int cycle = 2 * numRails - 2;
     string ciphertext;
 
     for (int i = 0; i < numRails; i++) {
         for (int j = i; j < length; j += cycle) {
-            ciphertext += plaintext[j];
+            ciphertext += text[j];
             int k = j + cycle - 2 * i;
             if (i != 0 && i != numRails - 1 && k < length)
-                ciphertext += plaintext[k];
+                ciphertext += text[k];
         }
     }
 
     return ciphertext;
 }
 
-// Функция для дешифрования методом Скитала
-string decrypt(const string& ciphertext, int rails) {
-    int length = ciphertext.length();
+// Функция для дешифрования методом Скитала  
+string decrypt(const string& text, int rails) {
+    int length = text.length();
     int numRails = min(rails, length);
     int cycle = 2 * numRails - 2;
     string plaintext(length, ' ');
@@ -34,69 +35,87 @@ string decrypt(const string& ciphertext, int rails) {
     int pos = 0;
     for (int i = 0; i < numRails; i++) {
         for (int j = i; j < length; j += cycle) {
-            plaintext[j] = ciphertext[pos++];
+            plaintext[j] = text[pos++];
             int k = j + cycle - 2 * i;
             if (i != 0 && i != numRails - 1 && k < length)
-                plaintext[k] = ciphertext[pos++];
+                plaintext[k] = text[pos++];
         }
     }
 
     return plaintext;
 }
+string get_password() {
+    string password;
+    cout << "Введите пароль: ";
+    cin >> password;
+    return password;
+}
 
-int main() {
-    setlocale(LC_ALL, "rus");
-    // Открываем исходный файл для чтения
-    ifstream inputFile("input.txt");
-    if (!inputFile) {
-        cout << "Ошибка при открытии файла." << endl;
-        return 1;
-    }
+void write_to_file(string filename, string text) {
+    ofstream file(filename);
+    file << text;
+    file.close();
+    cout << "Текст записан в файл " << filename << endl;
+}
 
-    // Читаем содержимое файла
-    string plaintext((istreambuf_iterator<char>(inputFile)),
-        istreambuf_iterator<char>());
+string read_from_file(string filename) {
+    ifstream file(filename);
+    string text((istreambuf_iterator<char>(file)), (istreambuf_iterator<char>()));
+    file.close();
+    return text;
+}
 
-    // Закрываем исходный файл
-    inputFile.close();
-
+int main()
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    string text, password;
+    char answer;
     int rails;
+    cout << "Введите исходный текст: ";
+    getline(cin, text);
     cout << "Введите количество ребер скитала: ";
     cin >> rails;
 
-    // Шифрование
-    string ciphertext = encrypt(plaintext, rails);
-    cout << "Зашифрованный текст: " << ciphertext << endl;
+    write_to_file("source.txt", text);
 
-    // Открываем файл для записи зашифрованного текста
-    ofstream encryptedFile("encrypted.txt");
-    if (!encryptedFile) {
-        cout << "Ошибка при открытии файла для записи." << endl;
-        return 1;
+    password = get_password();
+
+    // шифрование   
+    if (password == "secret") {
+        text = read_from_file("source.txt");
+        text = encrypt(text, rails);
+        write_to_file("encoded.txt", text);
+        cout << "Текст зашифрован и записан в encoded.txt" << endl;
     }
-
-    // Записываем зашифрованный текст в файл
-    encryptedFile << ciphertext;
-
-    // Закрываем файл
-    encryptedFile.close();
-
-    // Дешифрование
-    string decryptedText = decrypt(ciphertext, rails);
-    cout << "Расшифрованный текст: " << decryptedText << endl;
-
-    // Открываем файл для записи расшифрованного текста
-    ofstream decryptedFile("decrypted.txt");
-    if (!decryptedFile) {
-        cout << "Ошибка при открытии файла для записи." << endl;
-        return 1;
+    else {
+        cout << "Неверный пароль, шифрование невозможно" << endl;
     }
-
-    // Записываем расшифрованный текст в файл
-    decryptedFile << decryptedText;
-
-    // Закрываем файл
-    decryptedFile.close();
-
+    password = get_password();
+    // дешифрование   
+    if (password == "secret") {
+        text = read_from_file("encoded.txt");
+        text = decrypt(text, rails);
+        write_to_file("decoded.txt", text);
+        cout << "Текст расшифрован и записан в decoded.txt" << endl;
+    }
+    else {
+        cout << "Неверный пароль, дешифрование невозможно" << endl;
+    }
+    cout << "Нажмите 'p', чтобы распечатать файлы: ";
+    cin >> answer;
+    if (answer == 'p' || answer == 'P') {
+        cout << "Файл source.txt:" << endl;
+        cout << endl;
+        cout << read_from_file("source.txt") << endl;
+        cout << endl;
+        cout << "Файл encoded.txt:" << endl;
+        cout << endl;
+        cout << read_from_file("encoded.txt") << endl;
+        cout << endl;
+        cout << "Файл decoded.txt:" << endl;
+        cout << endl;
+        cout << read_from_file("decoded.txt") << endl;
+    }
     return 0;
 }
