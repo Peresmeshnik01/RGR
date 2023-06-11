@@ -1,27 +1,32 @@
 #include <iostream>  
 #include <fstream>  
 #include <algorithm>  
-#include <string>  
+#include <string>
+#include <cctype>
 #include <math.h>   
 using namespace std;
 
 string encrypt(string message, int key) { //шифрование
     string result = "";
     for (int i = 0; i < message.length(); i++) {
-        if (message[i] >= 'a' && message[i] <= 'z') { //для нижнего регистра
-            char ch = (message[i] + key - 'a') % 26 + 'a'; 
-            result += ch;
+        if (isalpha(message[i])) { //проверка на букву алфавита
+            if (message[i] >= 'a' && message[i] <= 'z') { //для нижнего регистра
+                char ch = (message[i] + key - 'a') % 26 + 'a';
+                result += ch;
+            }
+            else { //для верхнего регистра
+                char ch = (message[i] + key - 'A') % 26 + 'A';
+                result += ch;
+            }
         }
-        else if (message[i] >= 'A' && message[i] <= 'Z') {//для верхнего регистра
-            char ch = (message[i] + key - 'A') % 26 + 'A';
-            result += ch;
-        }
-        else {
-            throw runtime_error("Недопустимый символ в сообщении");
+        else { //обработка ошибки
+            cout << "Ошибка! Сообщение должно состоять только из букв английского алфавита." << endl;
+            exit(1); //прерывание программы при ошибке
         }
     }
     return result;
 }
+
 
 string decrypt(string message, int key) { //дешифрование
     string result = "";
@@ -76,9 +81,10 @@ int main()
 
     cout << "Введите исходный текст: ";
     getline(cin, message);
-
-    cout << "Введите ключ: ";
+    cout << "Введите ключ (целое число): ";
     cin >> key;
+
+    string en = encrypt(message, key); //проверка на правильность ввода
 
     write_to_file("source.txt", message);
     password = get_password();
@@ -104,9 +110,9 @@ int main()
     else {
         cout << "Неверный пароль, дешифрование невозможно" << endl;
     }
-    cout << "Нажмите 'p', чтобы распечатать файлы: ";
+    cout << "Нажмите 'f', чтобы распечатать файлы: ";
     cin >> answer;
-    if (answer == 'p' || answer == 'P') {
+    if (answer == 'f' || answer == 'F') {
         cout << "Файл source.txt:" << endl;
         cout << endl;
         cout << read_from_file("source.txt") << endl;
@@ -119,4 +125,5 @@ int main()
         cout << endl;
         cout << read_from_file("decoded_message.txt") << endl;
     }
+
 }
