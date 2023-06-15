@@ -1,4 +1,4 @@
-/*ТУТ ВСЁ НОРМ*/
+//РЅРѕСЂРј
 #include "Header.h"
 string e(string text) {
     int u = text.length();
@@ -108,49 +108,49 @@ void Write3(string text, string password, string password_) {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
 
-    cout << "Введите исходный текст: ";
+    cout << "Р’РІРµРґРёС‚Рµ РёСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚: ";
     getline(cin, text);
 
     write_to_file("source.txt", text);
 
 
 
-    cout << "-> Файл был записан в encoded.txt" << endl;
-    cout << "Пароль: ";
+    cout << "-> Р¤Р°Р№Р» Р±С‹Р» Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
+    cout << "РџР°СЂРѕР»СЊ: ";
     getline(cin, password);
     while (password != password_)
     {
-        cout << "Пароль: ";
-        getline(cin, password); // Получаем ввод пользователя
+        cout << "РџР°СЂРѕР»СЊ: ";
+        getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-        // Если введенный пароль неверный, выводим сообщение об ошибке
+        // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
         if (password != password_)
         {
-            cout << "Неверный пароль! Попробуйте ещё раз." << endl;
+            cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·." << endl;
         }
     }
     if (password == "123") {
         text = read_from_file("source.txt");
         text = e(text);
         write_to_file("encoded.txt", text);
-        cout << "-> Файл зашифрован и записан в encoded.txt" << endl;
+        cout << "-> Р¤Р°Р№Р» Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
     }
-    // дешифрование  
+    // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
     if (password == "123") {
         text = read_from_file("encoded.txt");
         text = d(text);
         write_to_file("decoded.txt", text);
-        cout << "-> Файл расшифрован и записан в decoded.txt" << endl;
+        cout << "-> Р¤Р°Р№Р» СЂР°СЃС€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ decoded.txt" << endl;
     }
-    cout << "Файл source.txt:" << endl;
+    cout << "Р¤Р°Р№Р» source.txt:" << endl;
     cout << endl;
     cout << read_from_file("source.txt") << endl;
     cout << endl;
-    cout << "Файл encoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("encoded.txt") << endl;
     cout << endl;
-    cout << "Файл decoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("decoded.txt") << endl;
     cout << endl;
