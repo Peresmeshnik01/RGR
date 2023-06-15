@@ -1,9 +1,9 @@
-//ТУТ ВСЁ НОРМ
+//РўРЈРў Р’РЎРЃ РќРћР Рњ
 #include "Header.h"
 
 string encodeText(const string& text) {
-    const string russianAlphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя.,-:…+= ";
-    const string encodedAlphabet = "АЩШЧЦЕЁХФИЙТСРПОНМЛКУЗЖДГВБЪЫЪЭЮЯащшчцеёхфийтсрпонмлкузждгвбъыьэюя.,-:…+= ";
+    const string russianAlphabet = "РђР‘Р’Р“Р”Р•РЃР–Р—РР™РљР›РњРќРћРџР РЎРўРЈР¤РҐР¦Р§РЁР©РЄР«Р¬Р­Р®РЇР°Р±РІРіРґРµС‘Р¶Р·РёР№РєР»РјРЅРѕРїСЂСЃС‚СѓС„С…С†С‡С€С‰СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
+    const string encodedAlphabet = "РђР©РЁР§Р¦Р•РЃРҐР¤РР™РўРЎР РџРћРќРњР›РљРЈР—Р–Р”Р“Р’Р‘РЄР«РЄР­Р®РЇР°С‰С€С‡С†РµС‘С…С„РёР№С‚СЃСЂРїРѕРЅРјР»РєСѓР·Р¶РґРіРІР±СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
     string encodedText;
     for (char c : text) {
         size_t index = russianAlphabet.find(tolower(c));
@@ -18,8 +18,8 @@ string encodeText(const string& text) {
 }
 
 string decodeText(const string& encodedText) {
-    const string russianAlphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя.,-:…+= ";
-    const string encodedAlphabet = "АЩШЧЦЕЁХФИЙТСРПОНМЛКУЗЖДГВБЪЫЪЭЮЯащшчцеёхфийтсрпонмлкузждгвбъыьэюя.,-:…+= ";
+    const string russianAlphabet = "РђР‘Р’Р“Р”Р•РЃР–Р—РР™РљР›РњРќРћРџР РЎРўРЈР¤РҐР¦Р§РЁР©РЄР«Р¬Р­Р®РЇР°Р±РІРіРґРµС‘Р¶Р·РёР№РєР»РјРЅРѕРїСЂСЃС‚СѓС„С…С†С‡С€С‰СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
+    const string encodedAlphabet = "РђР©РЁР§Р¦Р•РЃРҐР¤РР™РўРЎР РџРћРќРњР›РљРЈР—Р–Р”Р“Р’Р‘РЄР«РЄР­Р®РЇР°С‰С€С‡С†РµС‘С…С„РёР№С‚СЃСЂРїРѕРЅРјР»РєСѓР·Р¶РґРіРІР±СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
     string decodedText;
     for (char c : encodedText) {
         size_t index = encodedAlphabet.find(c);
@@ -34,8 +34,8 @@ string decodeText(const string& encodedText) {
 }
 
 bool isRussianText(const string& text) {
-    const string russianAlphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя.,-:…+= ";
-    const string encodedAlphabet = "АЩШЧЦЕЁХФИЙТСРПОНМЛКУЗЖДГВБЪЫЪЭЮЯащшчцеёхфийтсрпонмлкузждгвбъыьэюя.,-:…+= ";
+    const string russianAlphabet = "РђР‘Р’Р“Р”Р•РЃР–Р—РР™РљР›РњРќРћРџР РЎРўРЈР¤РҐР¦Р§РЁР©РЄР«Р¬Р­Р®РЇР°Р±РІРіРґРµС‘Р¶Р·РёР№РєР»РјРЅРѕРїСЂСЃС‚СѓС„С…С†С‡С€С‰СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
+    const string encodedAlphabet = "РђР©РЁР§Р¦Р•РЃРҐР¤РР™РўРЎР РџРћРќРњР›РљРЈР—Р–Р”Р“Р’Р‘РЄР«РЄР­Р®РЇР°С‰С€С‡С†РµС‘С…С„РёР№С‚СЃСЂРїРѕРЅРјР»РєСѓР·Р¶РґРіРІР±СЉС‹СЊСЌСЋСЏ.,-:вЂ¦+= ";
     for (char c : text) {
         if (russianAlphabet.find(tolower(c)) == string::npos) {
             return false;
@@ -51,26 +51,26 @@ void Write9(string text, string password, string password_) {
 
     string inputText;
     while (true) {
-        cout << "Введите исходный текст: " << endl;
+        cout << "Р’РІРµРґРёС‚Рµ РёСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚: " << endl;
         getline(cin, inputText);
-        cout << "Введите пароль: ";
+        cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
         getline(cin, password);
         while (password != password_)
         {
-            cout << "Введите пароль: ";
-            getline(cin, password); // Получаем ввод пользователя
+            cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
+            getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-            // Если введенный пароль неверный, выводим сообщение об ошибке
+            // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
             if (password != password_)
             {
-                cout << "Неверный пароль! Попробуйте снова." << endl;
+                cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
             }
         }
         if (isRussianText(inputText)) {
             break;
         }
         else {
-            cout << "Ошибка: используйте русский язык." << endl;
+            cout << "РћС€РёР±РєР°: РёСЃРїРѕР»СЊР·СѓР№С‚Рµ СЂСѓСЃСЃРєРёР№ СЏР·С‹Рє." << endl;
         }
     }
 
@@ -78,27 +78,27 @@ void Write9(string text, string password, string password_) {
     if (inputFile.is_open()) {
         inputFile << inputText;
         inputFile.close();
-        cout << "\n" << "Исходный текст записан в файл 'input.txt'" << "\n\n";
+        cout << "\n" << "РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚ Р·Р°РїРёСЃР°РЅ РІ С„Р°Р№Р» 'input.txt'" << "\n\n";
     }
     else {
-        cout << "Ошибка при открытии файла 'input.txt'" << endl;
+        cout << "РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё С„Р°Р№Р»Р° 'input.txt'" << endl;
         
     }
 
     string encodedText = encodeText(inputText);
-    cout << "Закодированный текст: " << "\n" << encodedText << endl;
+    cout << "Р—Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚: " << "\n" << encodedText << endl;
     cout << "\n";
     string decodedText = decodeText(encodedText);
-    cout << "Декодированный текст: " << "\n" << decodedText << endl;
+    cout << "Р”РµРєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚: " << "\n" << decodedText << endl;
 
     ofstream encodedFile("encoded.txt");
     if (encodedFile.is_open()) {
         encodedFile << encodedText;
         encodedFile.close();
-        cout << "\n" << "Закодированный текст записан в файл 'encoded_text.txt'" << endl;
+        cout << "\n" << "Р—Р°РєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚ Р·Р°РїРёСЃР°РЅ РІ С„Р°Р№Р» 'encoded_text.txt'" << endl;
     }
     else {
-        cout << "Ошибка при открытии файла 'encoded.txt'" << endl;
+        cout << "РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё С„Р°Р№Р»Р° 'encoded.txt'" << endl;
        
     }
 
@@ -106,9 +106,9 @@ void Write9(string text, string password, string password_) {
     if (decodedFile.is_open()) {
         decodedFile << decodedText;
         decodedFile.close();
-        cout << "Декодированный текст записан в файл 'decoded.txt'" << endl;
+        cout << "Р”РµРєРѕРґРёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚ Р·Р°РїРёСЃР°РЅ РІ С„Р°Р№Р» 'decoded.txt'" << endl;
     }
     else {
-        cout << "Ошибка при открытии файла 'decoded_text.txt'" << endl;
+        cout << "РћС€РёР±РєР° РїСЂРё РѕС‚РєСЂС‹С‚РёРё С„Р°Р№Р»Р° 'decoded_text.txt'" << endl;
     }
 }
