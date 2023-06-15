@@ -1,4 +1,3 @@
-//НУЖНА ПРОВЕРКА НА АНГЛИЙСКИЙ ТЕКСТ, И НА КОДОВОЕ СЛОВО (оно на английском и с заглавнми буквами)
 #include "Header.h"
 
 void createVigenereTable(int tableArr[26][26]) {
@@ -76,11 +75,11 @@ string cipherDecryption(const string& text, const string& mappedKey) {
 
 void Write6(string text, string password, string password_) {
     while (password != password_) {
-        cout << "Введите пароль: ";
+        cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
         getline(cin, password);
 
         if (password != password_) {
-            cout << "Неверный пароль! Попробуйте снова." << endl;
+            cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
         }
     }
 
@@ -89,17 +88,27 @@ void Write6(string text, string password, string password_) {
         string mappedKey;
 
         string msg;
-        cout << "Введите текст на английском: ";
+        cout << "Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚ РЅР° Р°РЅРіР»РёР№СЃРєРѕРј: ";
         getline(cin, msg);
-
+        bool en_text = _isEnglish_(msg);
+        while (!en_text) {
+            cout << "Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ РµС‰Рµ СЂР°Р· (РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ): ";
+            getline(cin, msg);
+            en_text = _isEnglish_(msg);
+        }
         for (int i = 0; i < msg.length(); i++) {
             msg[i] = toupper(msg[i]);
         }
 
         string key;
-        cout << "Введите ключ (английское слово заглавными буквами): ";
+        cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ (Р°РЅРіР»РёР№СЃРєРѕРµ СЃР»РѕРІРѕ Р±СѓРєРІР°РјРё): ";
         getline(cin, key);
-
+        bool en_text_2 = _isEnglish_(key);
+        while (!en_text_2) {
+            cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ РµС‰Рµ СЂР°Р· (РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ): ";
+            getline(cin, key);
+            en_text_2 = _isEnglish_(key);
+        }
         for (int i = 0; i < key.length(); i++) {
             key[i] = toupper(key[i]);
         }
@@ -129,24 +138,24 @@ void Write6(string text, string password, string password_) {
             text = read_from_file("source.txt");
             text = cipherEncryption(text, mappedKey);
             write_to_file("encoded.txt", text);
-            cout << "-> Текст зашифрован и записан в encoded.txt" << endl;
+            cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
         }
-        // дешифрование  
+        // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
         if (password == "123") {
             text = read_from_file("encoded.txt");
             text = cipherDecryption(text, mappedKey);
             write_to_file("decoded.txt", text);
-            cout << "-> Текст зашифрован и записан decoded.txt" << endl;
+            cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ decoded.txt" << endl;
         }
-        cout << "Файл source.txt:" << endl;
+        cout << "Р¤Р°Р№Р» source.txt:" << endl;
         cout << endl;
         cout << read_from_file("source.txt") << endl;
         cout << endl;
-        cout << "Файл encoded.txt:" << endl;
+        cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
         cout << endl;
         cout << read_from_file("encoded.txt") << endl;
         cout << endl;
-        cout << "Файл decoded.txt:" << endl;
+        cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
         cout << endl;
         cout << read_from_file("decoded.txt") << endl;
         cout << endl;
