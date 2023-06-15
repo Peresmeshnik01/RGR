@@ -1,4 +1,4 @@
-//ТУТ ВСЁ НОРМ
+//РўРЈРў Р’РЎРЃ РќРћР Рњ
 #include "Header.h"
 #include <algorithm> 
 void createNewAlphabet(char* newAlphabet) {
@@ -7,32 +7,32 @@ void createNewAlphabet(char* newAlphabet) {
     char word[ALPHABET_SIZE + 1];
     bool validInput = false;
     while (!validInput) {
-        cout << "Введите ключ (слово на английском языке заглавными буквами): ";
+        cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ (СЃР»РѕРІРѕ РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ Р·Р°РіР»Р°РІРЅС‹РјРё Р±СѓРєРІР°РјРё): ";
         cin >> word;
         validInput = true;
         int wordLength = strlen(word);
         for (int i = 0; i < wordLength; i++) {
-            if (!isupper(word[i])) { // Проверяем, что символ является заглавной буквой 
+            if (!isupper(word[i])) { // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ СЃРёРјРІРѕР» СЏРІР»СЏРµС‚СЃСЏ Р·Р°РіР»Р°РІРЅРѕР№ Р±СѓРєРІРѕР№ 
                 validInput = false;
                 break;
             }
         }
         if (!validInput) {
-            std::cout << "Ошибка: введите только заглавные буквы английского алфавита" << std::endl;
+            std::cout << "РћС€РёР±РєР°: РІРІРµРґРёС‚Рµ С‚РѕР»СЊРєРѕ Р·Р°РіР»Р°РІРЅС‹Рµ Р±СѓРєРІС‹ Р°РЅРіР»РёР№СЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°" << std::endl;
         }
     }
 
-    // Добавляем буквы из слова в новый алфавит 
+    // Р”РѕР±Р°РІР»СЏРµРј Р±СѓРєРІС‹ РёР· СЃР»РѕРІР° РІ РЅРѕРІС‹Р№ Р°Р»С„Р°РІРёС‚ 
     int wordLength = strlen(word);
     for (int i = 0; i < wordLength; i++) {
         newAlphabet[i] = word[i];
     }
 
-    // Добавляем остальные буквы из исходного алфавита 
+    // Р”РѕР±Р°РІР»СЏРµРј РѕСЃС‚Р°Р»СЊРЅС‹Рµ Р±СѓРєРІС‹ РёР· РёСЃС…РѕРґРЅРѕРіРѕ Р°Р»С„Р°РІРёС‚Р° 
     int j = wordLength;
     for (int i = 0; i < ALPHABET_SIZE; i++) {
         char letter = originalAlphabet[i];
-        if (strchr(word, letter) == nullptr) { // Проверяем, что буква не была добавлена ранее 
+        if (strchr(word, letter) == nullptr) { // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ Р±СѓРєРІР° РЅРµ Р±С‹Р»Р° РґРѕР±Р°РІР»РµРЅР° СЂР°РЅРµРµ 
             newAlphabet[j] = letter;
             j++;
         }
@@ -42,7 +42,7 @@ void createNewAlphabet(char* newAlphabet) {
 
 
 string encode_text(string text, char* ALPHABET_ENCODED) {
-    string text_encoded; // строка для хранения закодированного текста 
+    string text_encoded; // СЃС‚СЂРѕРєР° РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Р·Р°РєРѕРґРёСЂРѕРІР°РЅРЅРѕРіРѕ С‚РµРєСЃС‚Р° 
     string encoded_text;
     char ALPHABET_DECODED[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -85,47 +85,47 @@ string decode_text(string text, char* ALPHABET_ENCODED) {
 void Write7(string text, string password, string password_) {
     const int ALPHABET_SIZE = 26;
     setlocale(LC_ALL, "RUS");
-    cout << "Введите текст: ";
+    cout << "Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚: ";
     getline(cin, text);
     write_to_file("source.txt", text);
     char newAlphabet[ALPHABET_SIZE + 1];
     char ALPHABET_ENCODED[ALPHABET_SIZE + 1];
     createNewAlphabet(newAlphabet);
-    cout << "Введите пароль: ";
+    cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
     getline(cin, password);
     while (password != password_)
     {
-        cout << "Введите пароль: ";
-        getline(cin, password); // Получаем ввод пользователя
+        cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
+        getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-        // Если введенный пароль неверный, выводим сообщение об ошибке
+        // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
         if (password != password_)
         {
-            cout << "Неверный пароль! Попробуйте снова." << endl;
+            cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
         }
     }
     if (password == "123") {
         text = read_from_file("source.txt");
         text = encode_text(text, ALPHABET_ENCODED);
         write_to_file("encoded.txt", text);
-        cout << "-> Текст зашифрован и записан в encoded.txt" << endl;
+        cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
     }
-    // дешифрование  
+    // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
     if (password == "123") {
         text = read_from_file("encoded.txt");
         text = decode_text(text, ALPHABET_ENCODED);
         write_to_file("decoded.txt", text);
-        cout << "-> Текст расшифрован и записан decoded.txt" << endl;
+        cout << "-> РўРµРєСЃС‚ СЂР°СЃС€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ decoded.txt" << endl;
     }
-    cout << "Файл source.txt:" << endl;
+    cout << "Р¤Р°Р№Р» source.txt:" << endl;
     cout << endl;
     cout << read_from_file("source.txt") << endl;
     cout << endl;
-    cout << "Файл encoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("encoded.txt") << endl;
     cout << endl;
-    cout << "Файл decoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("decoded.txt") << endl;
     cout << endl;
