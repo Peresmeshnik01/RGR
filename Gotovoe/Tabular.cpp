@@ -1,10 +1,10 @@
-/* НЕ РАБОТАЕТ ДЛЯ НЕСКОЛЬКИХ СЛОВ ПОЧЕМУ ТО :(*/
+//РЅРѕСЂРј
 #include "Header.h" 
-// Функция шифрования
+// Р¤СѓРЅРєС†РёСЏ С€РёС„СЂРѕРІР°РЅРёСЏ
 string Fun(string plaintext, string key) {
     string ciphertext = "";
 
-    // Создаем таблицу замены
+    // РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ Р·Р°РјРµРЅС‹
     vector<vector<char>> table(26, vector<char>(26));
     for (int i = 0; i < 26; i++) {
         for (int j = 0; j < 26; j++) {
@@ -20,25 +20,39 @@ string Fun(string plaintext, string key) {
     }
 
     int col = 0;
+    int i = 0;
 
-    // Шифруем каждый символ открытого текста
-    for (char c : plaintext) {
-        if (isalpha(c)) {
-            c = toupper(c);
-            int row = key_only_letters[col % key_only_letters.length()] - 'A';
-            ciphertext += table[row][c - 'A'];
-            col++;
+    // РЁРёС„СЂСѓРµРј РєР°Р¶РґРѕРµ СЃР»РѕРІРѕ РѕС‚РєСЂС‹С‚РѕРіРѕ С‚РµРєСЃС‚Р°
+    while (i < plaintext.length()) {
+        string word = "";
+        while (i < plaintext.length() && isalpha(plaintext[i])) {
+            word += plaintext[i];
+            i++;
         }
+
+        if (!word.empty()) {
+            for (char& c : word) {
+                c = toupper(c);
+                int row = key_only_letters[col % key_only_letters.length()] - 'A';
+                ciphertext += table[row][c - 'A'];
+                col++;
+            }
+            ciphertext += " ";
+        }
+        i++;
+    }
+
+    // РЈРґР°Р»СЏРµРј РїРѕСЃР»РµРґРЅРёР№ РїСЂРѕР±РµР»
+    if (!ciphertext.empty()) {
+        ciphertext.pop_back();
     }
 
     return ciphertext;
 }
-
-// Функция расшифровки
 string Fun2(string ciphertext, string key) {
     string plaintext = "";
 
-    // Создаем таблицу замены
+    // РЎРѕР·РґР°РµРј С‚Р°Р±Р»РёС†Сѓ Р·Р°РјРµРЅС‹
     vector<vector<char>> table(26, vector<char>(26));
     for (int i = 0; i < 26; i++) {
         for (int j = 0; j < 26; j++) {
@@ -55,18 +69,21 @@ string Fun2(string ciphertext, string key) {
 
     int col = 0;
 
-    // Расшифровываем каждый символ шифротекста
-    for (char c : ciphertext) {
-        if (isalpha(c)) {
-            c = toupper(c);
+    // Р Р°СЃС€РёС„СЂРѕРІС‹РІР°РµРј РєР°Р¶РґС‹Р№ СЃРёРјРІРѕР» С€РёС„СЂРѕС‚РµРєСЃС‚Р°
+    for (int i = 0; i < ciphertext.length(); i++) {
+        if (isalpha(ciphertext[i])) {
+            ciphertext[i] = toupper(ciphertext[i]);
             int row = key_only_letters[col % key_only_letters.length()] - 'A';
-            for (int i = 0; i < 26; i++) {
-                if (table[row][i] == c) {
-                    plaintext += 'A' + i;
+            for (int j = 0; j < 26; j++) {
+                if (table[row][j] == ciphertext[i]) {
+                    plaintext += 'A' + j;
                     break;
                 }
             }
             col++;
+        }
+        else {
+            plaintext += ciphertext[i];
         }
     }
 
@@ -74,44 +91,47 @@ string Fun2(string ciphertext, string key) {
 }
 bool isEnglish(string str) {
     for (int i = 0; i < str.length(); i++) {
-        int asciiCode = (int)str[i];
-        if (asciiCode < 65 || (asciiCode > 90 && asciiCode < 97) || asciiCode>122) {
+        if ((str[i] < 'A' || str[i] > 'Z') && (str[i] < 'a' || str[i] > 'z')) {
+            continue;
+        }
+        if (str[i] < 'A' || str[i] > 'z' || (str[i] > 'Z' && str[i] < 'a')) {
             return false;
         }
     }
     return true;
 }
+
 void Write2(string text, string password, string password_) {
     setlocale(LC_ALL, "RUS");
     string key;
     bool all_upper = true;
-    cout << "Введите исходный текст на английском языке заглавными буквами:  ";
+    cout << "Р’РІРµРґРёС‚Рµ РёСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚ РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ Р·Р°РіР»Р°РІРЅС‹РјРё Р±СѓРєРІР°РјРё:  ";
     getline(cin, text);
     for (char c : text) {
         if (islower(c)) {
             all_upper = false;
-            cout << "Ошибка: строка содержит символы нижнего регистра.\n";
+            cout << "РћС€РёР±РєР°: СЃС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ СЃРёРјРІРѕР»С‹ РЅРёР¶РЅРµРіРѕ СЂРµРіРёСЃС‚СЂР°.\n";
             break;
         }
     }
     bool mes = isEnglish(text);
     if (all_upper && mes) {
-        cout << "Введите ключ (слово на английском языке): ";
+        cout << "Р’РІРµРґРёС‚Рµ РєР»СЋС‡ (СЃР»РѕРІРѕ РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ): ";
         getline(cin, key);
         bool k = isEnglish(key);
         if (k) {
             write_to_file("source.txt", text);
-            cout << "Введите пароль: ";
+            cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
             getline(cin, password);
             while (password != password_)
             {
-                cout << "Введите пароль: ";
-                getline(cin, password); // Получаем ввод пользователя
+                cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
+                getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-                // Если введенный пароль неверный, выводим сообщение об ошибке
+                // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
                 if (password != password_)
                 {
-                    cout << "Неверный пароль! Попробуйте снова." << endl;
+                    cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
                 }
             }
             if (password == "123") {
@@ -119,35 +139,35 @@ void Write2(string text, string password, string password_) {
                 text = read_from_file("source.txt");
                 text = Fun(text, key);
                 write_to_file("encoded.txt", text);
-                cout << "-> Текст зашифрован и записан в encoded.txt" << endl;
+                cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
             }
-            // дешифрование  
+            // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
             if (password == "123") {
                 text = read_from_file("encoded.txt");
                 text = Fun2(text, key);
                 write_to_file("decoded.txt", text);
-                cout << "-> Текст зашифрован и записан decoded.txt" << endl;
+                cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ decoded.txt" << endl;
             }
-            cout << "Файл source.txt:" << endl;
+            cout << "Р¤Р°Р№Р» source.txt:" << endl;
             cout << endl;
             cout << read_from_file("source.txt") << endl;
             cout << endl;
-            cout << "Файл encoded.txt:" << endl;
+            cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
             cout << endl;
             cout << read_from_file("encoded.txt") << endl;
             cout << endl;
-            cout << "Файл decoded.txt:" << endl;
+            cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
             cout << endl;
             cout << read_from_file("decoded.txt") << endl;
             cout << endl;
         }
 
         else if (!k) {
-            cout << "Ключ содержит символы на русском языке";
+            cout << "РљР»СЋС‡ СЃРѕРґРµСЂР¶РёС‚ СЃРёРјРІРѕР»С‹ РЅР° СЂСѓСЃСЃРєРѕРј СЏР·С‹РєРµ";
         }
 
         else if (!mes) {
-            cout << "Строка содержит символы на русском языке";
+            cout << "РЎС‚СЂРѕРєР° СЃРѕРґРµСЂР¶РёС‚ СЃРёРјРІРѕР»С‹ РЅР° СЂСѓСЃСЃРєРѕРј СЏР·С‹РєРµ";
         }
     }
 }
