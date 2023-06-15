@@ -14,13 +14,6 @@ string encrypt_(string message, int key) {
                 result += ch;
             }
         }
-    /*
-        else {
-            // cout << "Ошибка! Сообщение должно состоять только из букв английского алфавита." << endl;
-            cout << "Error, only eng alphabet" << endl;
-            exit(1);
-        }
-    */
     }
     return result;
 }
