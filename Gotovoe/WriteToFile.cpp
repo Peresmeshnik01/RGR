@@ -4,7 +4,7 @@ using namespace std;
 string get_password() {
     setlocale(LC_ALL, "RUS");
     string password;
-    cout << "Ââåäèòå ïàðîëü: ";
+    cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð°Ñ€Ð¾Ð»ÑŒ: ";
     cin >> password;
     return password;
 }
