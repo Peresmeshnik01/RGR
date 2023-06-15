@@ -1,4 +1,4 @@
-//ТУТ ВСЁ НОРМ
+//РЅРѕСЂРј
 #include "Header.h"
 
 
@@ -20,7 +20,7 @@ string Encr(const string& text, int rails) {
     return ciphertext;
 }
 
-// Функция для дешифрования методом Скитала  
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РґРµС€РёС„СЂРѕРІР°РЅРёСЏ РјРµС‚РѕРґРѕРј РЎРєРёС‚Р°Р»Р°  
 string Decr(const string& text, int rails) {
     int length = text.length();
     int numRails = min(rails, length);
@@ -43,24 +43,24 @@ void Write8(string text, string password, string password_) {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     int rails = 0;
-    cout << "Введите текст: ";
+    cout << "Р’РІРµРґРёС‚Рµ С‚РµРєСЃС‚: ";
     getline(cin, text);
     write_to_file("source.txt", text);
-    cout << "Введите количество ребер скитала: ";
+    cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЂРµР±РµСЂ СЃРєРёС‚Р°Р»Р°: ";
     cin >> rails;
     cin.ignore();
 
-    cout << "Введите пароль: ";
+    cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
     getline(cin, password);
     while (password != password_)
     {
-        cout << "Введите пароль: ";
-        getline(cin, password); // Получаем ввод пользователя
+        cout << "Р’РІРµРґРёС‚Рµ РїР°СЂРѕР»СЊ: ";
+        getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-        // Если введенный пароль неверный, выводим сообщение об ошибке
+        // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
         if (password != password_)
         {
-            cout << "Неверный пароль! Попробуйте снова." << endl;
+            cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°." << endl;
         }
     }
     if (password == "123") {
@@ -68,24 +68,24 @@ void Write8(string text, string password, string password_) {
         text = read_from_file("source.txt");
         text = Encr(text, rails);
         write_to_file("encoded.txt", text);
-        cout << "-> Текст зашифрован и записан в encoded.txt" << endl;
+        cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
     }
-    // дешифрование  
+    // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
     if (password == "123") {
         text = read_from_file("encoded.txt");
         text = Decr(text, rails);
         write_to_file("decoded.txt", text);
-        cout << "-> Текст зашифрован и записан decoded.txt" << endl;
+        cout << "-> РўРµРєСЃС‚ Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ decoded.txt" << endl;
     }
-    cout << "Файл source.txt:" << endl;
+    cout << "Р¤Р°Р№Р» source.txt:" << endl;
     cout << endl;
     cout << read_from_file("source.txt") << endl;
     cout << endl;
-    cout << "Файл encoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("encoded.txt") << endl;
     cout << endl;
-    cout << "Файл decoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("decoded.txt") << endl;
     cout << endl;
