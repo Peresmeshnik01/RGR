@@ -1,4 +1,4 @@
-/*ЕСТЬ ПРОВЕРКА НА АНГЛИЙСКИЙ ЯЗЫК, НО ЕСЛИ ВВЕДЕН ТЕКСТ НА ДРУГОМ ЯЗЫКЕ НУЖНО ЗАПРАШИВАТЬ ТЕКСТ ЕЩЁ РАЗ*/
+//РЅРѕСЂРј
 #include "Header.h" 
 string encrypt_(string message, int key) {
     setlocale(LC_ALL, "RUS");
@@ -14,15 +14,25 @@ string encrypt_(string message, int key) {
                 result += ch;
             }
         }
+    /*
         else {
-            // cout << "Ошибка! Сообщение должно состоять только из букв английского алфавита." << endl;
+            // cout << "РћС€РёР±РєР°! РЎРѕРѕР±С‰РµРЅРёРµ РґРѕР»Р¶РЅРѕ СЃРѕСЃС‚РѕСЏС‚СЊ С‚РѕР»СЊРєРѕ РёР· Р±СѓРєРІ Р°РЅРіР»РёР№СЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°." << endl;
             cout << "Error, only eng alphabet" << endl;
             exit(1);
         }
+    */
     }
     return result;
 }
-
+bool _isEnglish_(string str) {
+    for (int i = 0; i < str.length(); i++) {
+        int asciiCode = (int)str[i];
+        if (asciiCode < 65 || (asciiCode > 90 && asciiCode < 97) || asciiCode>122) {
+            return false;
+        }
+    }
+    return true;
+}
 
 string decrypt_(string message, int key) {
     string result = "";
@@ -49,22 +59,29 @@ string decrypt_(string message, int key) {
 void Write1(string text, string password, string password_) {
     setlocale(LC_ALL, "RUS");
     int key = 0;
-    cout << "Введите исходный текст : ";
+    
+    cout << "Р’РІРµРґРёС‚Рµ РёСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚ (РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ) : ";
     getline(cin, text);
+    bool en_text = _isEnglish_(text);
+    while (!en_text) {
+        cout << "Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ РµС‰Рµ СЂР°Р· (РЅР° Р°РЅРіР»РёР№СЃРєРѕРј СЏР·С‹РєРµ): ";
+        getline(cin, text);
+        en_text = _isEnglish_(text);
+    }
     write_to_file("source.txt", text);
-    cout << "-> Файл был записан в encoded.txt";
+    cout << "-> Р¤Р°Р№Р» Р±С‹Р» Р·Р°РїРёСЃР°РЅ РІ encoded.txt";
     cout << endl;
-    cout << "Пароль: ";
+    cout << "РџР°СЂРѕР»СЊ: ";
     getline(cin, password);
     while (password != password_)
     {
-        cout << "Пароль: ";
-        getline(cin, password); // Получаем ввод пользователя
+        cout << "РџР°СЂРѕР»СЊ: ";
+        getline(cin, password); // РџРѕР»СѓС‡Р°РµРј РІРІРѕРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
-        // Если введенный пароль неверный, выводим сообщение об ошибке
+        // Р•СЃР»Рё РІРІРµРґРµРЅРЅС‹Р№ РїР°СЂРѕР»СЊ РЅРµРІРµСЂРЅС‹Р№, РІС‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
         if (password != password_)
         {
-            cout << "Неверный пароль! Попробуйте ещё раз." << endl;
+            cout << "РќРµРІРµСЂРЅС‹Р№ РїР°СЂРѕР»СЊ! РџРѕРїСЂРѕР±СѓР№С‚Рµ РµС‰С‘ СЂР°Р·." << endl;
         }
     }
     if (password == "123") {
@@ -73,24 +90,24 @@ void Write1(string text, string password, string password_) {
         text = read_from_file("source.txt");
         text = encrypt_(text, key);
         write_to_file("encoded.txt", text);
-        cout << "-> Файл зашифрован и записан в encoded.txt" << endl;
+        cout << "-> Р¤Р°Р№Р» Р·Р°С€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ encoded.txt" << endl;
     }
-    // дешифрование  
+    // РґРµС€РёС„СЂРѕРІР°РЅРёРµ  
     if (password == "123") {
         text = read_from_file("encoded.txt");
         text = decrypt_(text, key);
         write_to_file("decoded.txt", text);
-        cout << "-> Файл расшифрован и записан в decoded.txt" << endl;
+        cout << "-> Р¤Р°Р№Р» СЂР°СЃС€РёС„СЂРѕРІР°РЅ Рё Р·Р°РїРёСЃР°РЅ РІ decoded.txt" << endl;
     }
-    cout << "Файл source.txt:" << endl;
+    cout << "Р¤Р°Р№Р» source.txt:" << endl;
     cout << endl;
     cout << read_from_file("source.txt") << endl;
     cout << endl;
-    cout << "Файл encoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» encoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("encoded.txt") << endl;
     cout << endl;
-    cout << "Файл decoded.txt:" << endl;
+    cout << "Р¤Р°Р№Р» decoded.txt:" << endl;
     cout << endl;
     cout << read_from_file("decoded.txt") << endl;
     cout << endl;
