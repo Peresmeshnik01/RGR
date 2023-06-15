@@ -12,31 +12,32 @@
 #include <Windows.h>
 using namespace std;
 
-string get_password();
-void write_to_file(string filename, string text);
-string read_from_file(string filename);
+string get_password(); //РїРѕР»СѓС‡РµРЅРёРµ РїР°СЂРѕР»СЏ
+void write_to_file(string filename, string text); //Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р»
+string read_from_file(string filename); //С‡С‚РµРЅРёРµ СЃ С„Р°Р№Р»Р°
 
-string encrypt_(string message, int key);//шифр Цезаря
+string encrypt_(string message, int key);//С€РёС„СЂ Р¦РµР·Р°СЂСЏ
 string decrypt_(string message, int key);
+bool _isEnglish_(string str);
 void Write1(string text, string password, string password_);
 
-string Fun(string plaintext, string key);//Табличная
-string Fun2(string ciphertext, string key);//Табличная
+string Fun(string plaintext, string key);//РўР°Р±Р»РёС‡РЅР°СЏ
+string Fun2(string ciphertext, string key);//РўР°Р±Р»РёС‡РЅР°СЏ
 bool isEnglish(string str);
 void Write2(string text, string password, string password_);
 
-string e(string text);//матричная шифровка
+string e(string text);//РјР°С‚СЂРёС‡РЅР°СЏ С€РёС„СЂРѕРІРєР°
 string d(string text);
 void Write3(string text, string password, string password_);
 
 
-string _encrypt(string text, int k, int* perm);//зафиксированная перестановка
-string _decrypt(string text, int k, int* perm);//зафиксированная перестановка
+string _encrypt(string text, int k, int* perm);//Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ РїРµСЂРµСЃС‚Р°РЅРѕРІРєР°
+string _decrypt(string text, int k, int* perm);//Р·Р°С„РёРєСЃРёСЂРѕРІР°РЅРЅР°СЏ РїРµСЂРµСЃС‚Р°РЅРѕРІРєР°
 bool _isEnglish_(string str);
 void Write4(string text, string password, string password_);
 
-string atbash(string text);//атбаш
-string atbash_rus(string text);//атбаш
+string atbash(string text);//Р°С‚Р±Р°С€
+string atbash_rus(string text);//Р°С‚Р±Р°С€
 void Write5(string text, string password, string password_);
 
 void createVigenereTable(int tableArr[26][26]);
@@ -45,16 +46,16 @@ int itrCount(int key, int msg);
 string cipherDecryption(const string& text, const string& mappedKey);
 void Write6(string text, string password, string password_);
 
-void createNewAlphabet(char* newAlphabet);//кодовое слово
-string encode_text(string text, char* ALPHABET_ENCODED);//кодовое слово
-string decode_text(string text, char* ALPHABET_ENCODED);//кодовое слово
+void createNewAlphabet(char* newAlphabet);//РєРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ
+string encode_text(string text, char* ALPHABET_ENCODED);//РєРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ
+string decode_text(string text, char* ALPHABET_ENCODED);//РєРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ
 void Write7(string text, string password, string password_);
 
-string Encr(const string& text, int rails);//Скитала
-string Decr(const string& text, int rails);//Скитала
+string Encr(const string& text, int rails);//РЎРєРёС‚Р°Р»Р°
+string Decr(const string& text, int rails);//РЎРєРёС‚Р°Р»Р°
 void Write8(string text, string password, string password_);
 
-string encodeText(const string& text);//тарабарская грамота
-string decodeText(const string& encodedText);//тарабарская грамота
+string encodeText(const string& text);//С‚Р°СЂР°Р±Р°СЂСЃРєР°СЏ РіСЂР°РјРѕС‚Р°
+string decodeText(const string& encodedText);//С‚Р°СЂР°Р±Р°СЂСЃРєР°СЏ РіСЂР°РјРѕС‚Р°
 bool isRussianText(const string& text);
 void Write9(string text, string password, string password_);
